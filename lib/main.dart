@@ -112,7 +112,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     controller: _textController,
                     onChanged: (String text) {
                       setState(() {
-                        _isComposing = text.length > 0;
+                        _isComposing = text.isNotEmpty;
                       });
                     },
                     onSubmitted: _handleSubmitted,
@@ -130,6 +130,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   void _handleSubmitted(String text) {
+    if (text.isEmpty) { return; }
     _textController.clear();
     setState(() {_isComposing = false; });
     ChatMessage message = new ChatMessage(
